@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">akaSwap gadget</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+        <p class="fst-italic mt-4" style="font-size: 12px;">The website is powered by <a href="https://akaswap.com/" class="text-decoration-none" style="color:black;">akaSwap API</a> and <a href="https://tzkt.io/" class="text-decoration-none" style="color:black;">TzKT API</a>,
+          and the icons are made by <a href="https://www.flaticon.com/authors/freepik/" class="text-decoration-none" style="color:black;">Freepik</a> from <a href="https://www.flaticon.com/" class="text-decoration-none" style="color:black;">www.flaticon.com.</a></p>
+        <h3 class="my-4 fw-bold">Introduction</h1>
+        <p>Welcome to akaSwap gadget!</p>
+        <p>The website helps you to inquire about some pieces of information about tokens and transactions by akaSwap API.</p>
+        <p>The following are introductions of gadgets, you can enter the corresponding pages to use them.</p>
+        <p>Feel free to use them ~</p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row justify-content-center" style="height: 5em;">
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/line_chart.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Token Price History</h4>
+                  <p class="card-text">Given the token id and platform, you can get the price history of the token.</p>
+                  <a href="/history" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/top.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Ranking</h4>
+                  <p class="card-text">You can query the different rankings of tokens based on various conditions.</p>
+                  <a href="/ranking" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/record.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Transaction Record</h4>
+                  <p class="card-text">You can query the transaction record based on various conditions.</p>
+                  <a href="/record" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>      
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Bundle Ranking</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+    </div>
+</div>
+
+{% if data == None %}
+
+    <div class="container-fluid mt-5">
+        {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }} w-25 mx-auto text-center">
+                {{ message[1] }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid text-center mt-5">
+        <form method="post" action="/ranking/bundle">
+            <div class="form-group row justify-content-center" style="height: 7em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Attribute : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="bundle_Amount" value="bundleAmount">
+                        <label class="form-check-label">Amount</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="bundle_Total" value="bundleTotal">
+                        <label class="form-check-label">Total</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="bundle_rate" value="bundleRate">
+                        <label class="form-check-label">Rate</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="xtz_Per_Bundle" value="xtzPerBundle">
+                        <label class="form-check-label">Price</label>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="bundle_Item_Amount" value="bundleItemAmount">
+                        <label class="form-check-label">Item Amount</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="issue_Time" value="issueTime">
+                        <label class="form-check-label">Issue Time</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="title" value="title">
+                        <label class="form-check-label">Title</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="bundle_Id" value="bundleId">
+                        <label class="form-check-label">Bundle ID</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 4em; margin: 1em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Reverse : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="reverse" id="reverse_true" value="reverse_True">
+                        <label class="form-check-label">True</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="reverse" id="reverse_false" value="reverse_False">
+                        <label class="form-check-label">False</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn" style="background-color: Wheat;margin-top: 30px;margin-bottom: 100px;">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="container-fluid text-center mt-5">
+        <h5 class="my-5">{{ data['option'] }}</h5>
+
+        <div class="row justify-content-center h-50 py-3" style="height: 5em; background-color: rgba(228, 228, 228, 0.8);">
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Rank</span>
+            </div>
+            <div class="col-2">
+                <span class="fs-5 fw-bold align-middle">Bundle ID</span>
+            </div>
+            <div class="col-5">
+                <span class="fs-5 fw-bold align-middle">Bundle</span>
+            </div>
+            <div class="col-2">
+            </div>
+            {% if data['Unit']  %}
+                <div class="col-2">
+                    <span class="fs-5 fw-bold align-middle">{{ data['Unit'] }}</span>
+                </div>
+            {% endif %}
+        </div>
+
+        {% for token in data['tokens'] %}
+            <div class="row justify-content-center h-50 align-items-center py-2" style="background-color:{{ token['color'] }};">
+                <div class="col-1">
+                    <span class="align-middle">{{ token['rank'] }}</span>
+                </div>
+                <div class="col-2">
+                    <span class="align-middle"># {{ token['Id'] }}</span>
+                </div>
+                <div class="col-5">
+                    <span class="align-middle"><a href="{{ token['url'] }}" class="text-decoration-none" style="color:black;">{{ token['name'] }}</a></span>
+                </div>
+                <div class="col-2">
+                    {% if token['photo'] %}
+                        <img src="{{ token['photo'] }}" class="mx-auto" style="max-width: 5em; max-height:5em;">
+                    {% endif %}
+                </div>
+                {% if data['Unit']  %}
+                    <div class="col-2">
+                        <span class="align-middle">{{ token['option'] }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <p class="pt-3">{{ data['Current Time'] }}</p>
+        <a href="/ranking/bundle" class="btn" style="background-color: Wheat; margin-bottom: 100px; margin-top: 10px;">Back</a>
+    </div>
+{% endif %}
+
+{% endblock %}

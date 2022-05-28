@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Collection Ranking</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+    </div>
+</div>
+
+{% if data == None %}
+
+    <div class="container-fluid mt-5">
+        {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }} w-25 mx-auto text-center">
+                {{ message[1] }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid text-center mt-5">
+        <form method="post" action="/ranking/collection">
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <label for="input_collector" class="col-1 col-form-label fw-bold">Collector : </label>
+                <div class="col-2">
+                    <input type="text" class="form-control" id="input_collector" name="collector_addr" placeholder="Wallet Address">
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Attribute : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="collectible_price" value="collectiblePrice">
+                        <label class="form-check-label">Collectible Price</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="own_amount" value="ownAmount">
+                        <label class="form-check-label">Own Amount</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="name" value="name">
+                        <label class="form-check-label">Name</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="token_id" value="tokenId">
+                        <label class="form-check-label">Token ID</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 4em; margin: 1em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Reverse : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="reverse" id="reverse_true" value="reverse_True">
+                        <label class="form-check-label">True</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="reverse" id="reverse_false" value="reverse_False">
+                        <label class="form-check-label">False</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 4em; margin: 2em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Platform : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="akaSwap" value="akaobj">
+                        <label class="form-check-label">akaSwap</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="ASMeiR" value="asmeir">
+                        <label class="form-check-label">ASMeiR</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="Tez Dozen" value="tezdozen">
+                        <label class="form-check-label">Tez Dozen</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="TD-Guardian" value="td-guardian">
+                        <label class="form-check-label">TD-Guardian</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="Hicetnunc" value="hicetnunc">
+                        <label class="form-check-label">Hicetnunc</label>
+                    </div>                  
+                </div>
+            </div>
+            <button type="submit" class="btn" style="background-color: Wheat;margin-top: 30px;margin-bottom: 100px;">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="container-fluid text-center mt-5">
+
+        <a href="{{ data['URL'] }}" class="fs-3 text-decoration-none" style="color:black;">{{ data['Collector'] }}</a>
+        <h5 class="mt-4 mb-5">{{ data['option'] }}</h5>
+
+        <div class="row justify-content-center h-50 py-3" style="height: 5em; background-color: rgba(228, 228, 228, 0.8);">
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Rank</span>
+            </div>
+            <div class="col-2">
+                <span class="fs-5 fw-bold align-middle">Token ID</span>
+            </div>
+            <div class="col-5">
+                <span class="fs-5 fw-bold align-middle">Collection</span>
+            </div>
+            <div class="col-2">
+            </div>
+            {% if data['option'] != 'Name' and data['option'] != "Token ID"  %}
+                <div class="col-2">
+                    <span class="fs-5 fw-bold align-middle">{{ data['Unit'] }}</span>
+                </div>
+            {% endif %}
+        </div>
+
+        {% for token in data['tokens'] %}
+            <div class="row justify-content-center h-50 align-items-center py-2" style="background-color:{{ token['color'] }};">
+                <div class="col-1">
+                    <span class="align-middle">{{ token['rank'] }}</span>
+                </div>
+                <div class="col-2">
+                    <span class="align-middle">{{ token['platform'] }} #{{ token['tokenId'] }}</span>
+                </div>
+                <div class="col-5 align-middle">
+                    <span class="align-middle"><a href="{{ token['url'] }}" class="text-decoration-none" style="color:black;">{{ token['name'] }}</a></span>
+                </div>
+                <div class="col-2">
+                    {% if token['photo'] %}
+                        <img src="{{ token['photo'] }}" class="mx-auto my-1" style="max-width: 5em; max-height:5em;">
+                    {% endif %}
+                </div>
+                {% if data['option'] != 'Name' and data['option'] != "Token ID" %}
+                    <div class="col-2">
+                        <span class="align-middle">{{ token['option'] }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <p class="pt-3">{{ data['Current Time'] }}</p>
+        <a href="/ranking/collection" class="btn" style="background-color: Wheat; margin-bottom: 100px; margin-top: 10px;">Back</a>
+    </div>
+{% endif %}
+
+{% endblock %}

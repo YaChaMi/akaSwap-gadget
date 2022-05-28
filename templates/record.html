@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Transaction Record</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+    </div>
+</div>
+
+{% if data.get('Default End Time') %}
+
+    <div class="container-fluid mt-5">
+        {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }} w-25 mx-auto text-center">
+                {{ message[1] }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid text-center mt-5">
+        <form method="post" action="/record">
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <label for="input_user" class="col-1 col-form-label fw-bold">User : </label>
+                <div class="col-2">
+                    <input type="text" class="form-control" id="input_user" name="user_addr" placeholder="Wallet Address">
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <label for="start_time" class="col-1 col-form-label fw-bold">Start time : </label>
+                <div class="col-2">
+                    <input type="date" class="form-control" id="start_time" name="start_time" value="{{ data['Default Start Time'] }}" max="{{ data['Default End Time'] }}">
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <label for="start_time" class="col-1 col-form-label fw-bold">End time : </label>
+                <div class="col-2">
+                    <input type="date" class="form-control" id="end_time" name="end_time" value="{{ data['Default End Time'] }}" max="{{ data['Default End Time'] }}">
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 4em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Type : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="type" id="general" value="general">
+                        <label class="form-check-label">General</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="type" id="gacha" value="gacha">
+                        <label class="form-check-label">Gacha</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="type" id="auction" value="auction">
+                        <label class="form-check-label">Auction</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="type" id="bundle" value="bundle">
+                        <label class="form-check-label">Bundle</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 7em; margin: 2em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Action : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="mint" value="mint">
+                        <label class="form-check-label">Mint</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="burn" value="burn">
+                        <label class="form-check-label">Burn</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="swap" value="swap">
+                        <label class="form-check-label">Swap</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="transfer" value="transfer">
+                        <label class="form-check-label">Transfer</label>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="make" value="make">
+                        <label class="form-check-label">Make</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="sell" value="sell">
+                        <label class="form-check-label">Sell</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="action" id="collect" value="collect">
+                        <label class="form-check-label">Collect</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 4em; margin: 2em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Platform : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="akaSwap" value="akaobj">
+                        <label class="form-check-label">akaSwap</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="ASMeiR" value="asmeir">
+                        <label class="form-check-label">ASMeiR</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="Tez Dozen" value="tezdozen">
+                        <label class="form-check-label">Tez Dozen</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="TD-Guardian" value="td-guardian">
+                        <label class="form-check-label">TD-Guardian</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="platform" id="Hicetnunc" value="hicetnunc">
+                        <label class="form-check-label">Hicetnunc</label>
+                    </div>                  
+                </div>
+            </div>
+            <button type="submit" class="btn" style="background-color: Wheat;margin-top: 30px;margin-bottom: 100px;">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="container-fluid text-center mt-5">
+        <a href="{{ data['URL'] }}" class="fs-3 text-decoration-none" style="color:black;">{{ data['User'] }}</a>
+        <h5 class="mt-4 mb-5">{{ data['Start Time'] }} ~ {{ data['End Time'] }}</h5>
+
+        <div class="row justify-content-center h-50 py-3"  style="height: 5em; background-color: rgba(228, 228, 228, 0.8);">
+            <div class="col-2">
+                <span class="fs-5 fw-bold align-middle">Time</span>
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Platform</span>
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">From</span>
+            </div>
+            <div class="col-1">
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">To</span>
+            </div>
+            <div class="col-3">
+                <span class="fs-5 fw-bold align-middle">Token</span>
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Action</span>
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Amount</span>
+            </div>
+            <div class="col-1">
+                <span class="fs-5 fw-bold align-middle">Price</span>
+            </div>
+        </div>
+
+        {% for record in data['Records'] %}
+            <div class="row justify-content-center h-50 align-items-center py-2" style="background-color:{{ record['color'] }};">
+                <div class="col-2">
+                    <span class="align-middle">{{ record['time'] }}</span>
+                </div>
+                <div class="col-1">
+                    <span class="align-middle">{{ record['platform'] }}</span>
+                </div>
+                <div class="col-1 align-middle">
+                    <span class="align-middle"><a href="{{ record['from_url'] }}" class="text-decoration-none" style="color:black;">{{ record['from'] }}</a></span>
+                </div>
+                <div class="col-1">
+                    <span class="align-middle">→</span>
+                </div>
+                <div class="col-1 align-middle">
+                    <span class="align-middle"><a href="{{ record['to_url'] }}" class="text-decoration-none" style="color:black;">{{ record['to'] }}</a></span>
+                </div>
+                <div class="col-3 align-middle">
+                    <span class="align-middle"><a href="{{ record['token_url'] }}" class="text-decoration-none" style="color:black;">{{ record['token'] }}</a></span>
+                </div>
+                <div class="col-1">
+                    <span class="align-middle">{{ record['auction'] }}</span>
+                </div>
+                <div class="col-1">
+                    <span class="align-middle">{{ record['amount'] }}</span>
+                </div>
+                <div class="col-1">
+                    <span class="align-middle">{{ record['price'] }}</span>
+                </div>
+            </div>
+        {% endfor %}
+        <p class="pt-3">{{ data['Current Time'] }}</p>
+        <a href="/record" class="btn" style="background-color: Wheat; margin-bottom: 100px; margin-top: 10px;">Back</a>
+    </div>
+{% endif %}
+
+{% endblock %}

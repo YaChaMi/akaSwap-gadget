@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Ranking</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+        <p class="fst-italic" style="font-size: 12px;">The icons are made by <a href="https://www.flaticon.com/authors/freepik/" class="text-decoration-none" style="color:black;">Freepik</a>
+           and <a href="https://www.flaticon.com/authors/flatart-icons/" class="text-decoration-none" style="color:black;">flatart_icons</a> from <a href="https://www.flaticon.com/" class="text-decoration-none" style="color:black;">www.flaticon.com.</a></p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center" style="height: 5em;">
+        <div class="col-2"></div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 50px;">
+                <img src="{{ url_for('static', filename='img/creations.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Creation</h4>
+                  <p class="card-text">Given a creator, you can query the different rankings of his creations.</p>
+                  <a href="/ranking/creation" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 50px;">
+                <img src="{{ url_for('static', filename='img/collection.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Collection</h4>
+                  <p class="card-text">Given a collector, you can query the different rankings of his collections.</p>
+                  <a href="/ranking/collection" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/gachas.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Gacha</h4>
+                  <p class="card-text">You can query the different rankings of gachas.</p>
+                  <a href="/ranking/gacha" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/auction.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Auction</h4>
+                  <p class="card-text">You can query the different rankings of auctions.</p>
+                  <a href="/ranking/auction" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card mx-auto shadow-lg" style="width: 25rem; margin-bottom: 100px;">
+                <img src="{{ url_for('static', filename='img/bundle.png') }}" class="mx-auto pt-3" width="75%" height="75%">
+                <div class="card-body">
+                  <h4 class="card-title">Bundle</h4>
+                  <p class="card-text">You can query the different rankings of bundles.</p>
+                  <a href="/ranking/bundle" class="btn" style="background-color: Wheat;">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      
+
+{% endblock %}

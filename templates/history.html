@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}akaSwap gadget{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid text-center mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Token Price History</h1>
+        <hr class="my-4 mx-auto" style="width:50%">
+    </div>
+</div>
+
+{% if data == None %}
+
+    <div class="container-fluid mt-5">
+        {% for message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ message[0] }} w-25 mx-auto text-center">
+                {{ message[1] }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid text-center mt-5">
+        <form method="post" action="/history">
+            <div class="form-group row justify-content-center" style="height: 5em;">
+                <label for="input_token" class="col-1 col-form-label fw-bold">Token ID : </label>
+                    <div class="col-2">
+                <input type="text" class="form-control" id="input_token" name="token_id" placeholder="Token ID">
+                </div>
+            </div>
+            <div class="form-group row justify-content-center" style="height: 5em; margin-bottom: 2em;">
+                <div class="col-8">
+                    <p class="fw-bold"> Platform : </p>
+                </div>
+                <div class="col-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="platform" id="akaSwap" value="akaobj">
+                        <label class="form-check-label">akaSwap</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="platform" id="ASMeiR" value="asmeir">
+                        <label class="form-check-label">ASMeiR</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="platform" id="Tez Dozen" value="tezdozen">
+                        <label class="form-check-label">Tez Dozen</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="platform" id="TD-Guardian" value="td-guardian">
+                        <label class="form-check-label">TD-Guardian</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="platform" id="Hicetnunc" value="hicetnunc">
+                        <label class="form-check-label">Hicetnunc</label>
+                    </div>                    
+                </div>
+            </div>
+            <button type="submit" class="btn" style="background-color: Wheat;margin-bottom: 100px;">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="container-fluid text-center mt-5">
+        <a href="{{ data['URL'] }}" class="fs-3 text-decoration-none" style="color:black;">{{ data['Token Name'] }}</a>
+
+        <div class="container-fluid my-4">
+            {% for message in get_flashed_messages(with_categories=True) %}
+                <div class="alert alert-{{ message[0] }} w-25 mx-auto text-center">
+                    {{ message[1] }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if data['Photo'] %}
+            <img src="{{ data['Photo'] }}" class="mx-auto" style="width: 20%; height:20%; margin:50px;">
+        {% endif %}
+
+        {% if data['Chart'] %}
+            <div class="mx-auto h1" style="width: 900px; height:500px; margin:50px;">
+                {{ data['Chart'] | safe }}
+            </div>
+        {% endif %}
+
+        {% if data['Pie'] %}
+            <div class="mx-auto h1" style="width: 900px; height:500px; margin:50px;">
+                {{ data['Pie'] | safe }}
+            </div>
+        {% endif %}
+
+        {% for key , value in data['info'].items() %}
+            <div class="row justify-content-center h-50" style="height: 5em;">
+                <div class="col-3">
+                    <p>{{ key }}<p>
+                </div>
+                <div class="col-3">
+                    <p>{{ value }}<p>
+                </div>
+            </div>
+        {% endfor %}
+        <p class="pt-3">{{ data['Current Time'] }}</p>
+        <a href="/history" class="btn" style="background-color: Wheat; margin-bottom: 100px; margin-top: 10px;">Back</a>
+    </div>
+{% endif %}
+
+{% endblock %}
